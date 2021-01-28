@@ -10,11 +10,11 @@
 
 请在[这个页面](https://desktop.github.com/)下载GitHub Desktop，并按照指引完成账号的登录等工作。
 
-单击左上角的"Current repository"，在Add的下拉菜单中找到"Clone repository"。选中"Nabe0416/Project-GGJ2021"并且选择一个目标目录以供拉取，单击"Clone"。
+~单击左上角的"Current repository"，在Add的下拉菜单中找到"Clone repository"。~选中主屏幕按钮上的"Clone a repository from the Internet..."，然后选中"Nabe0416/Project-GGJ2021"并且选择一个目标目录以供拉取，单击"Clone"。
 
 至此你已经成功的将本库克隆到你的本地。
 
-在"Current repository"右侧有两个类似的选单/按钮，其中"Current branch"是你全程不需要操作的选单，在其右侧的按钮文字提示会根据目前你本地的库的情况变化。
+在左上角"Current repository"右侧有两个类似的选单/按钮，其中"Current branch"是你全程不需要操作的选单，在其右侧的按钮文字提示会根据目前你本地的库的情况变化。
 
 </br>
 
