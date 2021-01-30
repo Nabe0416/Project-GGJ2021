@@ -105,7 +105,6 @@ public class BlockEvenetManager : MonoBehaviour
                     }
                     break;
             }
-            print("获得了食物。");
         }else if(currentBE.be_type == BlockEventTypes.bet_misc)
         {
             int rand2 = Random.Range(0, 5);
@@ -138,5 +137,6 @@ public class BlockEvenetManager : MonoBehaviour
             //没写完
             print("触发了其他事件");
         }
+
     }
 }

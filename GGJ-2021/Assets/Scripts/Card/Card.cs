@@ -21,9 +21,15 @@ public enum FoodTypes
 [System.Serializable]
 public class Card
 {
+    public string c_name;
     public Sprite c_img;
     public CardTypes c_type;
     public string c_desc;
+
+    public void SendThisToCardCache()
+    {
+
+    }
 }
 
 public class FoodCard : Card

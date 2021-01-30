@@ -47,6 +47,7 @@ public class Block : MonoBehaviour
                 bc.AdddbcTo(1);
                 bc.AdddbttlTo(1);
                 bc.DisableButton(btn);
+                CardManager.cm.RenderHandCards();
                 //Debug.Log("count =" + bc.Getdbc());
                 //Debug.Log("ttl = " + bc.Getdbttl());
                 print("——————");

@@ -9,8 +9,9 @@ public class CardInstance : MonoBehaviour
     //此脚本所附着的Unity中的Image组件
     public Image img;
 
-    public CardInstance ()
+    private void Start()
     {
+        img = this.GetComponent<Image>();
         img.sprite = card.c_img;
     }
 }

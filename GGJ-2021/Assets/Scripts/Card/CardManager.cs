@@ -17,6 +17,15 @@ public class CardManager : MonoBehaviour
     private GameObject hand;//手牌父节点
     [SerializeField]
     private List<Card> handList = new List<Card>();//手牌列表
+    [SerializeField]
+    private List<GameObject> handInstanceList = new List<GameObject>();//手牌实例列表
+    [SerializeField]
+    private List<Card> unInstantiatedHand = new List<Card>();//待实例化手牌列表
+
+    [SerializeField]
+    private GameObject cardPrefab;
+
+    private Card cardCache;
 
     private void Start()
     {
@@ -25,11 +34,57 @@ public class CardManager : MonoBehaviour
         RenderHandCards();
     }
 
-    private void RenderHandCards()
+    public Card GetCardCache()
     {
+        return cardCache;
+    }
+
+    public void SetCardCache(Card c)
+    {
+        cardCache = c;
+    }
+
+    public void RenderHandCards()
+    {
+        /**
         foreach(Card cd in handList)
         {
 
+            unInstantiatedHand.Add(cd);
+            foreach(GameObject go in handInstanceList)
+            {
+                if(go.GetComponent<CardInstance>().card == cd)
+                {
+                    unInstantiatedHand.Remove(cd);
+                    break;
+                }
+            }
+        }
+        int i = 0;
+        foreach(Card cd in unInstantiatedHand)
+        {
+            var ci = Instantiate(cardPrefab, (Vector2)hand.transform.position + new Vector2(i*10, 0), Quaternion.identity, hand.transform);
+            ci.GetComponent<CardInstance>().card = cd;
+            i += 10;
+        }
+
+        unInstantiatedHand.Clear();**/
+        int i = 0;
+
+        print("列表大小" + handInstanceList.Count);
+        for (int it = handInstanceList.Count - 1; it > -1; it--)
+        {
+            print("列表大小" + handInstanceList.Count);
+            Destroy(handInstanceList[it]);
+            handInstanceList.RemoveAt(it);
+        }
+
+        foreach(Card cd in handList)
+        {
+            var ci = Instantiate(cardPrefab, (Vector2)hand.transform.position + new Vector2(i * 10, 0), Quaternion.identity, hand.transform);
+            handInstanceList.Add(ci);
+            ci.GetComponent<CardInstance>().card = cd;
+            i += 10;
         }
     }
 
@@ -41,16 +96,16 @@ public class CardManager : MonoBehaviour
     private void InitializeCardList()
     {
         //添加食物卡
-        cardsList.Add(GetFoodCard(FoodTypes.ft_fish));                                                                         //鱼，ID=0
-        cardsList.Add(GetFoodCard(FoodTypes.ft_fruit));                                                                        //水果，ID=1
-        cardsList.Add(GetFoodCard(FoodTypes.ft_meat));                                                                      //木板，ID=2
+        cardsList.Add(GetFoodCard("Fish", FoodTypes.ft_fish));                                                                         //鱼，ID=0
+        cardsList.Add(GetFoodCard("Fruit", FoodTypes.ft_fruit));                                                                        //水果，ID=1
+        cardsList.Add(GetFoodCard("Meat", FoodTypes.ft_meat));                                                                      //木板，ID=2
         //添加装备卡：需要添加sprite，攻击力，耐久
-        cardsList.Add(GetEquiCard(0, 1, 5, "随处可见的木棒，简单而无力的防身手段。"));                       //木棍，ID=3
-        cardsList.Add(GetEquiCard(1, 1, 5, "随处可见的石片，简单而无力的防身手段。"));                       //石片，ID=4
+        cardsList.Add(GetEquiCard("Stick", 0, 1, 1, "随处可见的木棒，简单而无力的防身手段。"));                       //木棍，ID=3
+        cardsList.Add(GetEquiCard("Sharp Stone", 1, 1, 1, "随处可见的石片，简单而无力的防身手段。"));                       //石片，ID=4
         //添加杂物卡：需要添加sprite
-        cardsList.Add(GetMiscCard(10, "某种坚韧的植物。"));                                                                 //坚韧的植物，ID=5
-        cardsList.Add(GetMiscCard(11, "剥取自某种动物的生皮革。"));                                                    //皮革，ID=6
-        cardsList.Add(GetMiscCard(12, "不知是谁处理好的木板。"));                                                       //木板，ID=7
+        cardsList.Add(GetMiscCard("Tough Plant", 10, "某种坚韧的植物。"));                                                                 //坚韧的植物，ID=5
+        cardsList.Add(GetMiscCard("Raw Hide", 11, "剥取自某种动物的生皮革。"));                                                    //皮革，ID=6
+        cardsList.Add(GetMiscCard("Wooden Plank", 12, "不知是谁处理好的木板。"));                                                       //木板，ID=7
         //添加线索卡
 
     }
@@ -60,9 +115,11 @@ public class CardManager : MonoBehaviour
         return cardsList[i];
     }
 
-    public FoodCard GetFoodCard(FoodTypes ft)
+    public FoodCard GetFoodCard(string name, FoodTypes ft)
     {
         FoodCard fcd = new FoodCard();
+
+        fcd.c_name = name;
         switch (ft)
         {
             case FoodTypes.ft_fruit:
@@ -78,9 +135,10 @@ public class CardManager : MonoBehaviour
         return fcd;
     }
 
-    public EquipmentCard GetEquiCard(int sprite_id, int atk, int dur, string desc)
+    public EquipmentCard GetEquiCard(string name, int sprite_id, int atk, int dur, string desc)
     {
         EquipmentCard ecd = new EquipmentCard();
+        ecd.c_name = name;
         ecd.c_img = cardSprites[sprite_id];
         ecd.c_desc = desc;
         ecd.ec_atk = atk;
@@ -88,9 +146,10 @@ public class CardManager : MonoBehaviour
         return ecd;
     }
 
-    public MiscCard GetMiscCard(int sprite_id, string desc)
+    public MiscCard GetMiscCard(string name, int sprite_id, string desc)
     {
         MiscCard mc = new MiscCard();
+        mc.c_name = name;
         mc.c_img = cardSprites[sprite_id];
         mc.c_desc = desc;
         return mc;
