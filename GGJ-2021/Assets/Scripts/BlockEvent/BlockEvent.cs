@@ -12,13 +12,22 @@ public enum BlockEventTypes
 
 public class BlockEvent 
 {
+    public int i = 0;
     public BlockEventTypes be_type;
+
+    public static BlockEvent_Food ConvertToBEF(BlockEvent bloe)
+    {
+        BlockEvent_Food bef = new BlockEvent_Food();
+        bef.bef_amount = bloe.i;
+        bef.be_type = BlockEventTypes.bet_food;
+        return bef;
+    }
 }
 
 public class BlockEvent_Food : BlockEvent
 {
     public int bef_amount;
-    public BlockEvent_Food(BlockTerrains bt)
+    public BlockEvent_Food(BlockTerrains bt = BlockTerrains.bt_forest)
     {
         be_type = BlockEventTypes.bet_food;
         int rand;
@@ -66,6 +75,7 @@ public class BlockEvent_Food : BlockEvent
                 }
                 break;
         }
+        i = bef_amount;
     }
 }
 
@@ -90,6 +100,8 @@ public class BlockEvent_Enemy : BlockEvent
     public int bee_enemyAtk;
     public BlockEvent_Enemy()
     {
+        be_type = BlockEventTypes.bet_enemy;
+
         int rand = Random.Range(0, 1);
         if(rand >= 1)
         {
@@ -116,6 +128,8 @@ public class BlockEvent_Other : BlockEvent
     public BE_OtherEvents beo_event;
     public BlockEvent_Other()
     {
+        be_type = BlockEventTypes.bet_other;
+
         int rand = Random.Range(0, 3);
         if(rand >= 2)
         {

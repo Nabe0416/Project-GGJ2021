@@ -49,6 +49,7 @@ public class Block : MonoBehaviour
                 bc.DisableButton(btn);
                 //Debug.Log("count =" + bc.Getdbc());
                 //Debug.Log("ttl = " + bc.Getdbttl());
+                print("——————");
             }
 
             //临时方法

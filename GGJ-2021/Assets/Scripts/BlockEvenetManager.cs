@@ -7,6 +7,8 @@ public class BlockEvenetManager : MonoBehaviour
     private BlockEvent currentBE;
 
     static public BlockEvenetManager bem;
+        
+    private BlockEvent_Food cbe;
 
     private void Start()
     {
@@ -16,6 +18,7 @@ public class BlockEvenetManager : MonoBehaviour
     {
         int rand = Random.Range(0, 100);
         print("当前地形是" + bt);
+        print("事件随机数是" + rand);
         switch (bt)
         {
             case BlockTerrains.bt_forest:
@@ -79,25 +82,26 @@ public class BlockEvenetManager : MonoBehaviour
 
         if(currentBE.be_type == BlockEventTypes.bet_food)
         {
-            BlockEvent_Food cbe = (BlockEvent_Food)currentBE;
+            cbe =  BlockEvent.ConvertToBEF(currentBE);
+            print("获得" + cbe.bef_amount + "个食物");
             switch (bt)
             {
                 case BlockTerrains.bt_forest:
                     for(int i = 0; i < cbe.bef_amount; i++)
                     {
-                        CardManager.cm.AddToHandlist(CardManager.cm.GetCardFromList(2));
+                        CardManager.cm.AddToHandlist(CardManager.cm.GetCardFromList(1));
                     }
                     break;
                 case BlockTerrains.bt_river:
                     for (int i = 0; i < cbe.bef_amount; i++)
                     {
-                        CardManager.cm.AddToHandlist(CardManager.cm.GetCardFromList(1));
+                        CardManager.cm.AddToHandlist(CardManager.cm.GetCardFromList(0));
                     }
                     break;
                 case BlockTerrains.bt_stone:
                     for (int i = 0; i < cbe.bef_amount; i++)
                     {
-                        CardManager.cm.AddToHandlist(CardManager.cm.GetCardFromList(3));
+                        CardManager.cm.AddToHandlist(CardManager.cm.GetCardFromList(2));
                     }
                     break;
             }

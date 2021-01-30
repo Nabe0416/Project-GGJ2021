@@ -10,7 +10,8 @@ public class BlocksController : MonoBehaviour
     //已探索的格子数量
     private int DiscoveredBlocksCount = 0;
     //每周可探索的格子上限
-    private int DiscoverLimit = 2;
+    [SerializeField]
+    private int DiscoverLimit = 1;
     //总探索格子计数
     private int DiscoveredBlocksTtl = 0;
 
