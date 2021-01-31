@@ -18,28 +18,20 @@ public class GlobalEventManager : MonoBehaviour
     [SerializeField]
     GameObject blockLock;
 
-    IEnumerator GlobalEvent(List<Card> requiredCards, GlobalEventTypes getp)
+    public static GlobalEventManager gem;
+
+    private void Start()
+    {
+        gem = this;
+    }
+
+    public void GlobalEvent(List<Card> requiredCards, BlockEvent be)
     {
         GetEventText();
         ShowEventText();
         BlockLockSetTo(true);
+        
 
-        if(CardManager.cm.GetCardCache() != null)
-        {
-            if(requiredCards.Contains(CardManager.cm.GetCardCache()))
-            {
-                //CardApproved();
-            }
-            else
-            {
-                //CardNotApproved();
-            }
-        }
-        else
-        {
-            //NoCardCacheProvided();
-        }
-        yield return null;
     }
 
     private void BlockLockSetTo(bool b)

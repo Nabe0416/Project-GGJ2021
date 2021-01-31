@@ -26,7 +26,13 @@ public class BlocksController : MonoBehaviour
     public List<GameObject> blocks = new List<GameObject>();
 
     [SerializeField]
-    private int ratioOfCurrentSpot = 0;
+    private int currentSpotTerrainType = 1;
+
+    [SerializeField]
+    private List<Sprite> blockSprites = new List<Sprite>();
+
+    [SerializeField]
+    private List<Sprite> blockEventSprites = new List<Sprite>();
 
     private void Start()
     {
@@ -37,6 +43,21 @@ public class BlocksController : MonoBehaviour
         RefreshBlockCountTtl();
         //Debug.Log(DiscoveredBlocksCount);
         //Debug.Log(DiscoveredBlocksTtl);
+    }
+
+    public int GetTerrainType()
+    {
+        return currentSpotTerrainType;
+    }
+
+    public Sprite GetBlockSprite(int i)
+    {
+        return blockSprites[i];
+    }
+
+    public Sprite GetBlockEventSprite(int i)
+    {
+        return blockEventSprites[i];
     }
 
     public void InitializeBlocks()
@@ -70,8 +91,8 @@ public class BlocksController : MonoBehaviour
 
     public BlockTerrains GetTerrainOfBlock()
     {
-        float i = Random.Range(1, 11);
-        Vector3 ratio = ratioOfDiffTerrains[ratioOfCurrentSpot];
+        float i = Random.Range(0, 10);
+        Vector3 ratio = ratioOfDiffTerrains[currentSpotTerrainType];
         if(i >= ratio.x+ratio.y)
         {
             return BlockTerrains.bt_stone;

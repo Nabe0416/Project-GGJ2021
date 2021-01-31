@@ -14,4 +14,9 @@ public class CardInstance : MonoBehaviour
         img = this.GetComponent<Image>();
         img.sprite = card.c_img;
     }
+
+    public void SetThisAsCache()
+    {
+        CardManager.cm.SetCardCache(this);
+    }
 }

@@ -31,6 +31,7 @@ public class GlobalVarController : MonoBehaviour
     {
         daysOfGame += i;
         Debug.Log("现在是第" + daysOfGame + "天");
+        print("——————");
     }
 
     #endregion

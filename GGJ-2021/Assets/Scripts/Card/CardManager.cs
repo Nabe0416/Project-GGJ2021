@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.SceneManagement;
+
 public class CardManager : MonoBehaviour
 {
     static public CardManager cm;
@@ -25,23 +27,48 @@ public class CardManager : MonoBehaviour
     [SerializeField]
     private GameObject cardPrefab;
 
-    private Card cardCache;
+    [SerializeField]
+    private CardInstance cardCache;
 
     private void Start()
     {
         cm = this;
         InitializeCardList();
         RenderHandCards();
+
+        GiveFoodCardAtTheBeginning();
     }
 
-    public Card GetCardCache()
+    private void GiveFoodCardAtTheBeginning()
+    {
+        handList.Add(cardsList[1]);
+        handList.Add(cardsList[1]);
+        RenderHandCards();
+    }
+
+    public CardInstance GetCardCache()
     {
         return cardCache;
     }
 
-    public void SetCardCache(Card c)
+    public void SetCardCache(CardInstance c)
     {
+        if(cardCache != null)
+        {
+            DownCache(cardCache.gameObject);
+        }
         cardCache = c;
+        UpCache(c.gameObject);
+    }
+
+    private void UpCache(GameObject go)
+    {
+        go.transform.position += new Vector3(0, 30, 0);
+    }
+
+    private void DownCache(GameObject go)
+    {
+        go.transform.position -= new Vector3(0, 30, 0);
     }
 
     public void RenderHandCards()
@@ -70,11 +97,8 @@ public class CardManager : MonoBehaviour
 
         unInstantiatedHand.Clear();**/
         int i = 0;
-
-        print("列表大小" + handInstanceList.Count);
         for (int it = handInstanceList.Count - 1; it > -1; it--)
         {
-            print("列表大小" + handInstanceList.Count);
             Destroy(handInstanceList[it]);
             handInstanceList.RemoveAt(it);
         }
@@ -93,6 +117,16 @@ public class CardManager : MonoBehaviour
         handList.Add(c);
     }
 
+    public List<Card> GetHandList()
+    {
+        return handList;
+    }
+
+    public void RemoveFromHandList(int i)
+    {
+        handList.RemoveAt(i);
+    }
+
     private void InitializeCardList()
     {
         //添加食物卡
@@ -108,6 +142,20 @@ public class CardManager : MonoBehaviour
         cardsList.Add(GetMiscCard("Wooden Plank", 12, "不知是谁处理好的木板。"));                                                       //木板，ID=7
         //添加线索卡
 
+    }
+
+    public List<Card> GetCardByType(CardTypes ct)
+    {
+        List<Card> clist = new List<Card>();
+        foreach(Card c in cardsList)
+        {
+            if(c.c_type == ct)
+            {
+                clist.Add(c);
+            }
+        }
+
+        return clist;
     }
 
     public Card GetCardFromList(int i)

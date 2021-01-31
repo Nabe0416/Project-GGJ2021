@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using UnityEngine.SceneManagement;
+
 public class BlockEvenetManager : MonoBehaviour
 {
     private BlockEvent currentBE;
@@ -14,11 +16,10 @@ public class BlockEvenetManager : MonoBehaviour
     {
         bem = this;
     }
-    public void DoBlockEvent(BlockTerrains bt)
+    public BlockEvent DoBlockEvent(BlockTerrains bt)
     {
         int rand = Random.Range(0, 100);
         print("当前地形是" + bt);
-        print("事件随机数是" + rand);
         switch (bt)
         {
             case BlockTerrains.bt_forest:
@@ -129,7 +130,8 @@ public class BlockEvenetManager : MonoBehaviour
             print("获得了杂物");
         }else if(currentBE.be_type == BlockEventTypes.bet_enemy)
         {
-            //没写完
+            var clist = CardManager.cm.GetCardByType(CardTypes.ct_equi);
+            //GlobalEventManager.gem.GlobalEvent(clist, currentBE);
             print("触发了战斗");
         }
         else
@@ -137,6 +139,6 @@ public class BlockEvenetManager : MonoBehaviour
             //没写完
             print("触发了其他事件");
         }
-
+        return currentBE;
     }
 }

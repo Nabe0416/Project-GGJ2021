@@ -26,11 +26,18 @@ public class Card
     public CardTypes c_type;
     public string c_desc;
 
-    public void SendThisToCardCache()
-    {
+    public int int1 = 0;
+    public int int2 = 0;
 
+    public static EquipmentCard ConvertToEquiCard (Card c)
+    {
+        EquipmentCard ec = new EquipmentCard();
+        ec.ec_atk = c.int1;
+        ec.ec_durability = c.int2;
+        return ec;
     }
 }
+
 
 public class FoodCard : Card
 {
@@ -49,6 +56,18 @@ public class EquipmentCard : Card
     public EquipmentCard()
     {
         c_type = CardTypes.ct_equi;
+        int1 = ec_atk;
+        int2 = ec_durability;
+    }
+
+    public bool UseEqui()
+    {
+        ec_durability--;
+        if(ec_durability <= 0)
+        {
+            return false;
+        }
+        return true;
     }
 }
 
